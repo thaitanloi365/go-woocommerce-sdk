@@ -15,7 +15,7 @@ func NewClient(option *BasicOptions) *Client {
 	return &Client{
 		request: gorequest.New().Timeout(defaultTimeout).TLSClientConfig(&tls.Config{
 			InsecureSkipVerify: true,
-		}),
+		}).SetDebug(true),
 		option: option,
 	}
 

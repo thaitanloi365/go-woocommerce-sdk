@@ -27,10 +27,15 @@ type GetOrdersParams struct {
 	DP            int           `json:"dp"`
 }
 
-func (c *Client) GetOrders(params GetOrdersParams) ([]*Order, error) {
+func (c *Client) GetOrders(params *GetOrdersParams) ([]*Order, error) {
 	var url = c.option.buildURL("orders")
 
-	resp, body, errs := c.request.Clone().Query(params).Get(url).EndBytes()
+	resp, body, errs := c.request.Clone().
+		Query(params).
+		Get(url).
+		Set("Content-Type", "application/json").
+		SetBasicAuth(c.option.Key, c.option.Secret).
+		EndBytes()
 	if len(errs) > 0 {
 		return nil, errs[0]
 	}
@@ -57,7 +62,13 @@ func (c *Client) GetOrders(params GetOrdersParams) ([]*Order, error) {
 
 func (c *Client) GetOrder(id int) (*Order, error) {
 	var url = c.option.buildURL(fmt.Sprintf("orders/%d", id))
-	resp, body, errs := c.request.Clone().Get(url).EndBytes()
+
+	resp, body, errs := c.request.Clone().
+		Get(url).
+		Set("Content-Type", "application/json").
+		SetBasicAuth(c.option.Key, c.option.Secret).
+		EndBytes()
+
 	if len(errs) > 0 {
 		return nil, errs[0]
 	}
@@ -86,7 +97,12 @@ func (c *Client) UpdateOrder(id int) (*Order, error) {
 	url := c.option.buildURL(fmt.Sprintf("orders/%d", id))
 
 	data := c.request.Clone().Data
-	resp, body, errs := c.request.Clone().Put(url).Send(&data).EndBytes()
+	resp, body, errs := c.request.Clone().
+		Put(url).
+		Set("Content-Type", "application/json").
+		SetBasicAuth(c.option.Key, c.option.Secret).
+		Send(&data).
+		EndBytes()
 	if len(errs) > 0 {
 		return nil, errs[0]
 	}
@@ -119,7 +135,12 @@ func (c *Client) CreateOrder() (*Order, error) {
 		return nil, err
 	}
 
-	resp, body, errs := c.request.Clone().Post(url).Send(&data).EndBytes()
+	resp, body, errs := c.request.Clone().
+		Post(url).
+		Set("Content-Type", "application/json").
+		SetBasicAuth(c.option.Key, c.option.Secret).
+		Send(&data).
+		EndBytes()
 	if len(errs) > 0 {
 		return nil, errs[0]
 	}

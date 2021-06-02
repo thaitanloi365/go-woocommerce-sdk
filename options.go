@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	defaultAPIPrefix = "/wp-json/"
+	defaultAPIPrefix = "/wp-json/wc/"
 	defaultUserAgent = "WooCommerce API Client-Go"
 
 	defaultVersion = "v3"
