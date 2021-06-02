@@ -114,3 +114,19 @@ type Order struct {
 	Refunds            []interface{}   `json:"refunds"`
 	Links              Links           `json:"_links,omitempty"`
 }
+
+type WebHook struct {
+	ID              int           `json:"id"`
+	Name            string        `json:"name"`
+	Status          string        `json:"status"`
+	Topic           string        `json:"topic"`
+	Resource        string        `json:"resource"`
+	Event           string        `json:"event"`
+	Hooks           []interface{} `json:"hooks"`
+	DeliveryUrl     string        `json:"delivery_url"`
+	Secret          string        `json:"secret"`
+	DateCreated     string        `json:"date_created"`
+	DateCreatedGmt  string        `json:"date_created_gmt"`
+	DateModified    string        `json:"date_modified"`
+	DateModifiedGmt string        `json:"date_modified_gmt"`
+}
