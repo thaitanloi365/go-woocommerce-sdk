@@ -123,10 +123,31 @@ type WebHook struct {
 	Resource        string        `json:"resource"`
 	Event           string        `json:"event"`
 	Hooks           []interface{} `json:"hooks"`
-	DeliveryUrl     string        `json:"delivery_url"`
+	DeliveryURL     string        `json:"delivery_url"`
 	Secret          string        `json:"secret"`
 	DateCreated     string        `json:"date_created"`
 	DateCreatedGmt  string        `json:"date_created_gmt"`
 	DateModified    string        `json:"date_modified"`
 	DateModifiedGmt string        `json:"date_modified_gmt"`
 }
+
+type OrderStatus string
+
+const (
+	OrderStatusPending    OrderStatus = "pending"
+	OrderStatusProcessing OrderStatus = "processing"
+	OrderStatusOnHold     OrderStatus = "on-hold"
+	OrderStatusCompleted  OrderStatus = "completed"
+	OrderStatusCancelled  OrderStatus = "cancelled"
+	OrderStatusRefunded   OrderStatus = "refunded"
+	OrderStatusFailed     OrderStatus = "failed"
+	OrderStatusTrash      OrderStatus = "trash"
+)
+
+type WebHookStatus string
+
+const (
+	WebHookStatusActive   WebHookStatus = "active"
+	WebHookStatusPaused   WebHookStatus = "paused"
+	WebHookStatusDisabled WebHookStatus = "disabled"
+)

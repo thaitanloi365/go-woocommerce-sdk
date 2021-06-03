@@ -3,8 +3,6 @@ package woocommerce
 import (
 	"encoding/json"
 	"fmt"
-
-	"github.com/mitchellh/mapstructure"
 )
 
 type GetOrdersParams struct {
@@ -96,12 +94,10 @@ func (c *Client) GetOrder(id int) (*Order, error) {
 func (c *Client) UpdateOrder(id int) (*Order, error) {
 	url := c.option.buildURL(fmt.Sprintf("orders/%d", id))
 
-	data := c.request.Clone().Data
 	resp, body, errs := c.request.Clone().
 		Put(url).
 		Set("Content-Type", "application/json").
 		SetBasicAuth(c.option.Key, c.option.Secret).
-		Send(&data).
 		EndBytes()
 	if len(errs) > 0 {
 		return nil, errs[0]
@@ -128,18 +124,10 @@ func (c *Client) UpdateOrder(id int) (*Order, error) {
 func (c *Client) CreateOrder() (*Order, error) {
 	url := c.option.buildURL("orders")
 
-	// get order data from POST request's body
-	var data Order
-	err := mapstructure.Decode(c.request.Data, &data)
-	if err != nil {
-		return nil, err
-	}
-
 	resp, body, errs := c.request.Clone().
 		Post(url).
 		Set("Content-Type", "application/json").
 		SetBasicAuth(c.option.Key, c.option.Secret).
-		Send(&data).
 		EndBytes()
 	if len(errs) > 0 {
 		return nil, errs[0]
@@ -155,7 +143,7 @@ func (c *Client) CreateOrder() (*Order, error) {
 	}
 
 	var order Order
-	err = json.Unmarshal(body, &order)
+	err := json.Unmarshal(body, &order)
 	if err != nil {
 		return nil, err
 	}

@@ -43,10 +43,10 @@ func TestUpdateOrder(t *testing.T) {
 
 	// fields to be updated
 	requestData := make(map[string]interface{})
-	requestData["status"] = "on-hold"
+	requestData["status"] = OrderStatusOnHold
 	client.request.Data = requestData
 
-	order, err := client.UpdateOrder(28)
+	order, err := client.UpdateOrder(41)
 	assert.NoError(t, err)
 	assert.NotNil(t, order)
 }

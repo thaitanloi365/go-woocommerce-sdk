@@ -19,7 +19,7 @@ func TestCreateWebHook(t *testing.T) {
 	requestData["name"] = "Order updated"
 	requestData["topic"] = "order.updated"
 	requestData["delivery_url"] = "http://requestb.in/1g0sxmo1"
-	requestData["status"] = "active"
+	requestData["status"] = WebHookStatusPaused
 	client.request.Data = requestData
 
 	webHook, err := client.CreateWebHook()
@@ -35,7 +35,7 @@ func TestDeleteWebHook(t *testing.T) {
 		AdvancedOptions: AdvancedOptions{},
 	})
 
-	webHook, err := client.DeleteWebHook(0)
+	webHook, err := client.DeleteWebHook(1, "true")
 	assert.NoError(t, err)
 	assert.NotNil(t, webHook)
 }
