@@ -17,7 +17,12 @@ func (c *Client) CreateWebHook() (*WebHook, error) {
 		return nil, err
 	}
 
-	resp, body, errs := c.request.Clone().Post(url).Send(&data).EndBytes()
+	resp, body, errs := c.request.Clone().
+		Post(url).
+		Set("Content-Type", "application/json").
+		SetBasicAuth(c.option.Key, c.option.Secret).
+		Send(&data).
+		EndBytes()
 	if len(errs) > 0 {
 		return nil, errs[0]
 	}
@@ -40,10 +45,13 @@ func (c *Client) CreateWebHook() (*WebHook, error) {
 	return &webHook, nil
 }
 
-func (c *Client) DeleteWebHook(id int, force string) (*WebHook, error) {
+func (c *Client) DeleteWebHook(id int) (*WebHook, error) {
 	url := c.option.buildURL(fmt.Sprintf("webhooks/%d", id))
 
-	resp, body, errs := c.request.Clone().Param("force", force).Delete(url).EndBytes()
+	resp, body, errs := c.request.Clone().
+		SetBasicAuth(c.option.Key, c.option.Secret).
+		Delete(url).
+		EndBytes()
 	if len(errs) > 0 {
 		return nil, errs[0]
 	}

@@ -1,21 +1,41 @@
 package woocommerce
 
-/*
 import (
-	"fmt"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-
 func TestCreateWebHook(t *testing.T) {
 	client := NewClient(&BasicOptions{
-		URL:             "https://eziesell.wpcomstaging.com/wp-admin/admin.php?page=wc-admin",
-		Key:             "ck_66237fdf062b1f3bba71538c7ec7412fd87e74ab",
-		Secret:          "cs_d0533a64b02a549cbddc2f634a84689c2c93a6c2",
+		URL:             os.Getenv("URL"),
+		Key:             os.Getenv("KEY"),
+		Secret:          os.Getenv("SECRET"),
 		AdvancedOptions: AdvancedOptions{},
 	})
 
+	requestData := make(map[string]interface{})
+	requestData["name"] = "Order updated"
+	requestData["topic"] = "order.updated"
+	requestData["delivery_url"] = "http://requestb.in/1g0sxmo1"
+	client.request.Data = requestData
+
 	client.CreateWebHook()
-} */
+	webHook, err := client.UpdateOrder(28)
+	assert.NoError(t, err)
+	assert.NotNil(t, webHook)
+}
+
+func TestDeleteWebHook(t *testing.T) {
+	client := NewClient(&BasicOptions{
+		URL:             os.Getenv("URL"),
+		Key:             os.Getenv("KEY"),
+		Secret:          os.Getenv("SECRET"),
+		AdvancedOptions: AdvancedOptions{},
+	})
+
+	webHook, err := client.DeleteWebHook(1)
+	assert.NoError(t, err)
+	assert.NotNil(t, webHook)
+}
