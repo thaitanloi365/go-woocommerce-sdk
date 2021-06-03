@@ -61,10 +61,11 @@ func TestCreateOrder(t *testing.T) {
 
 	// data of the order that will be created
 	reuestData := make(map[string]interface{})
-	reuestData["id"] = 30
 	reuestData["payment_method"] = "bacs"
 	reuestData["payment_method_title"] = "Direct Bank Transfer"
 	reuestData["set_paid"] = true
+	reuestData["currency"] = "USD"
+	reuestData["status"] = "pending"
 	reuestData["billing"] = map[string]interface{}{
 		"first_name": "John",
 		"last_name":  "Doe",
@@ -107,7 +108,7 @@ func TestCreateOrder(t *testing.T) {
 	}
 	client.request.Data = reuestData
 
-	order, err := client.UpdateOrder(28)
+	order, err := client.CreateOrder()
 	assert.NoError(t, err)
 	assert.NotNil(t, order)
 }
