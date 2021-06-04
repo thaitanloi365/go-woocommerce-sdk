@@ -151,3 +151,11 @@ const (
 	WebHookStatusPaused   WebHookStatus = "paused"
 	WebHookStatusDisabled WebHookStatus = "disabled"
 )
+
+type AuthParams struct {
+	AppName     string
+	Scope       string
+	UserID      string
+	ReturnURL   string
+	CallbackURL string
+}
