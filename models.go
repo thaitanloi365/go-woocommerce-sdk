@@ -153,6 +153,7 @@ const (
 )
 
 type AuthParams struct {
+	StoreURL    string
 	AppName     string
 	Scope       string
 	UserID      string

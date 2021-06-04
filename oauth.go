@@ -6,7 +6,10 @@ import (
 )
 
 func (c *Client) GenerateAPIKey(authParams *AuthParams) (string, error) {
-	authenURL := c.option.URL + "/wc-auth/v1/authorize?"
+	authURL, err := url.Parse(fmt.Sprintf("%s/wc-auth/v1/authorize?", authParams.StoreURL))
+	if err != nil {
+		return "", err
+	}
 
 	params := url.Values{}
 	params.Add("app_name", authParams.AppName)
@@ -15,15 +18,7 @@ func (c *Client) GenerateAPIKey(authParams *AuthParams) (string, error) {
 	params.Add("return_url", authParams.ReturnURL)
 	params.Add("callback_url", authParams.CallbackURL)
 
-	encodedURL := fmt.Sprintf("%s%s", authenURL, params.Encode())
+	authURL.RawQuery = params.Encode()
 
-	_, body, errs := c.request.Clone().
-		Get(encodedURL).
-		End()
-
-	if len(errs) > 0 {
-		return "", errs[0]
-	}
-
-	return body, nil
+	return authURL.String(), nil
 }

@@ -16,13 +16,15 @@ func TestGenerateAPIKey(t *testing.T) {
 		AdvancedOptions: AdvancedOptions{},
 	})
 
+	storeURL := "https://eziesell.wpcomstaging.com"
 	appName := "WooCommerce API Client-Go"
 	scope := "read_write"
 	userID := "123"
-	returnURL := "https://eziesell.wpcomstaging.com"
-	callbackURL := "https://ensi7ppn341rg.x.pipedream.net"
+	returnURL := "https://en1m4618qmvrd.x.pipedream.net"
+	callbackURL := "https://en1m4618qmvrd.x.pipedream.net"
 
 	authParams := &AuthParams{
+		StoreURL:    storeURL,
 		AppName:     appName,
 		Scope:       scope,
 		UserID:      userID,
@@ -30,8 +32,8 @@ func TestGenerateAPIKey(t *testing.T) {
 		CallbackURL: callbackURL,
 	}
 
-	apiKey, err := client.GenerateAPIKey(authParams)
+	authURL, err := client.GenerateAPIKey(authParams)
 	assert.NoError(t, err)
-	assert.NotZero(t, apiKey)
-	fmt.Println(apiKey)
+	assert.NotZero(t, authURL)
+	fmt.Println(authURL)
 }
