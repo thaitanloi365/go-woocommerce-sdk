@@ -20,3 +20,7 @@ func NewClient(option *BasicOptions) *Client {
 	}
 
 }
+
+func (c *Client) SetRequestData(data map[string]interface{}) {
+	c.request.Data = data
+}
